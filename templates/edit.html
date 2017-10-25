@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> CREATE </title>
+  </head>
+  <body>
+
+    <form method="POST" action="/home">
+      <input type="submit" value="HOME">
+	  <br>
+	  <br>
+    </form>
+	
+	<form method="POST" action="/explore">
+      <input type="submit" value="EXPLORE">
+      <br>
+      <br>
+    </form>
+    
+    <form method="POST" action="/home">
+      Title: {{title}}
+	  <br>
+	  <br>
+      Previous Section: {{previous}}
+      <br>
+	  <br>
+	  Your Section:
+	  <br>
+      <textarea rows="5" cols="80" name="section">
+      </textarea>
+      <br>
+      <br>
+      <input type="submit" value="SUBMIT">
+    </form>
+    
+  </body>
+</html>
