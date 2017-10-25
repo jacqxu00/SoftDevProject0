@@ -5,4 +5,4 @@ xuJ —- 2017-10-24 14:50
     created main.py and setup the basic code (taken from previous login hw)
     created db.py and setup the basic code (taken from smpl code)
 parkP -- 2017-10-24 23:04
-	created added in create.html and edit.html into the templates directory
+    created and added create.html and edit.html to the templates directory
