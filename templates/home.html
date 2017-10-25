@@ -6,14 +6,32 @@
 <body>
 	<table>
 		<tr>
-			<td><a href="">Create New Story</a></td>
-			<td><a href="">Discover Stories</a></td>
-			<td><a href="">Logout</td>
+			<td>
+				<form action="/new">
+					<input type="submit" value="Create New">
+				</form>
+			</td>
+			<td>
+				<form action="/discover">
+					<input type="submit" value="Discover">
+				</form>
+			</td>
+			<td>
+				<form action="/logout">
+					<input type="submit" value="Logout">
+				</form>
+			</td>
 		</tr>
 	</table>
 	<br><br><br>
 	<table>
-	
+	<!--
+	{% for story in contributed %}
+		<tr><td>
+			<h4>{{ story.title }}</h4>
+			<p>{{ story.text.numsections }}</p>
+		</td></tr>
+		-->
 	</table>
 </body>
 </html>

@@ -6,3 +6,7 @@ xuJ —- 2017-10-24 14:50
     created db.py and setup the basic code (taken from smpl code)
 parkP -- 2017-10-24 23:04
     created and added create.html and edit.html to the templates directory
+xuJ — 2017-10-25 14:53
+    home.html: added forms for the links on top (might change this to links?)
+    home.html: added table info but in comments for now because data structures aren’t set
+    main.py: created data structures to store contributed/untouched stories
