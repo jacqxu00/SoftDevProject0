@@ -4,12 +4,12 @@
 	<title>Discover</title>
 </head>
 <body>
-	<form action="/home">
+	<form action="/home" method="POST">
 		<input type="submit" value="Home">
 		<br><br><br>
 		<table>
 		<!--
-		{% for story in uncontributed %}
+		{% for story in u %}
 			<tr><td>
 				<h4>{{ story.title }}</h4>
 				<p>{{ story.text.0 }}</p>
