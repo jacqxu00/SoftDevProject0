@@ -11,10 +11,10 @@ xuJ — 2017-10-25 14:53
     discover/home.html: added table for info, currently in comments because data structures aren’t set
     main.py: created data structures to store contributed/untouched stories
 xuJ - 2017-10-26 14:50
-    /story route in main.py:
-	all data structures to insert into templates
-	redirect if story is unedited by user in session
-	otherwise will proceed to storypage.html template
+    /story route in main.py: not all data structures are set yet, only the beginning code
+    -- all data structures to insert into templates
+    —- redirect if story is unedited by user in session
+    —- otherwise will proceed to storypage.html template
     discover.html and storypage.html: displaying data structures
 parkP -- 2017-10-26 14:50
     created create route
