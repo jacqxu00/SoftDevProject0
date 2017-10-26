@@ -37,20 +37,50 @@ def create():
 
 #checks to see if username is valid, and password is correct
 #returns: 0 if username is invalid, 1 if username valid password is incorrect, 2 if successful login
+def check(inputUser, inputPass):
+    userList = c.execute("SELECT user FROM users;")
+    userExist = False
+    for each in userList:
+        if each[0] == inputUser:
+            userExist = True
+    if userExist == False:
+        return 0
+
+    password = ''
+    for each in c.execute("SELECT pass FROM users WHERE user = \"%s\";"%inputUser):
+        password = each[0]
+    if password != inputPass:
+        return 1
+
+    else:
+        return 2
+
 def auth():
-
-
+    getUser = request.form['username']
+    getPass = request.form['password']
+    result = check(getUser, getPass)
+    if result == 0:
+ 	flash("Sorry, your username does not exist. Try registering instead.")
+	return redirect( url_for("root") )
+    elif result == 1:
+	flash("Sorry, your username and password do not match. Try again.")
+	return redirect( url_for("root") )
+    else:
+	session.add(getUser)
+	return render_template("home.html", c = contrib) )
+ 
 #root: if user in session redirects to home route, else displays login.html
 @my_app.route('/')
 def root():
-    #if username is invalid: suggests pressing register account instead
-    #if username is valid and password is incorrect: flash error
+    if "user" in session:
+        return redirect( url_for('home') )
+    return render_template("login.html")
 
 
 #home: if user in sesson displays home.html, else redirects to root route
 @my_app.route('/home')
 def home():
-    return render_template("home.html", c = contrib)
+    auth()
 
 
 #discover: goes to discover.html
@@ -71,7 +101,9 @@ def edit():
 #logout: removes session and redirects to root route
 @my_app.route('/logout')
 def logout():
-    
+    if "user" in session:
+        session.pop("user")
+    return redirect( url_for("root") )
     
 if __name__ == '__main__':
     my_app.debug = True
