@@ -19,21 +19,49 @@ db = sqlite3.connect(f) #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
 
 username = ""
-contrib = [] #array of story id's the user in session has contributed to
-uncontrib = [] #array of story id's the user in session has not contributed to
+contrib = {} #dict, KEY: story id's the user in session has contributed to, VALUE: [title, numsections]
+uncontrib = {} #dict, KEY: story id's the user in session has not contributed to, VALUE: [title, numsections]
 
 #==========================================================
 
 #creates two arrays, one for all the ids of the stories the user has contributed to, one for all the ids not contributed to
 def create():
-    contributed_stories = c.execute("SELECT id FROM edit WHERE user = username;") #pulls all story ids that user has contributed to
-    for story in contributed_stories:
-        #add each id to a list of ids
-        contrib.append(story[0])
-    uncontributed_stories = c.execute("SELECT id FROM edit WHERE user != username;") #pulls all story ids that user has not contributed to
+    contributed_stories = c.execute("SELECT id FROM edit WHERE user = username;")
+    #pulls all story ids that user has contributed to
+    
+    fo  r story in contributed_stories:
+        
+        value = [] #creates a value array
+        
+        #finds the story title based on story id
+        story_title = c.execute("SELECT title FROM stories WHERE id = %d;", story[0])
+        value.append(story_title[0][0])
+        
+        #finds the number of sections in story using story id then finds the content of the section
+        num_sects = c.execute("SELECT numsections FROM stories WHERE id = %d;", story[0])
+        recent_section = c.execute("SELECT content FROM edit WHERE section = %d;", num_sects[0])
+        value.append(recent_section[0][0])
+        
+        #defines story id key as value
+        contrib(story[0]) = value
+        
+    uncontributed_stories = c.execute("SELECT id FROM edit WHERE user != username;")
+    #pulls all story ids that user has not contributed to
+    
     for story in uncontributed_stories:
-        #add each id to a list of ids
-        uncontrib.append(story[0])
+        
+        value = [] #creates a value array
+        
+        #finds the story title based on story id
+        story_title = c.execute("SELECT title FROM stories WHERE id = %d;", story[0])
+        value.append(story_title[0][0])
+        
+        #finds the number of sections in story using story id then finds the content of the section
+        recent_section = c.execute("SELECT content FROM edit WHERE section = 1")
+        value.append(recent_section[0][0])
+        
+        #defines story id key as value
+        uncontrib(story[0]) = value
 
 #checks to see if username is valid, and password is correct
 #returns: 0 if username is invalid, 1 if username valid password is incorrect, 2 if successful login

@@ -25,13 +25,11 @@
 	</table>
 	<br><br><br>
 	<table>
-	<!--
 	{% for story in c %}
 		<tr><td>
-			<h4>{{ story.title }}</h4>
-			<p>{{ story.text.numsections }}</p>
+			<h4>{{ c[story][0] }}</h4>
+			<p>{{ c[story][1] }}</p>
 		</td></tr>
-		-->
 	</table>
 </body>
 </html>

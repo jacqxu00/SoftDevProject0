@@ -1,25 +1,35 @@
 xuJ -- 2017-10-22 22:13
     added design.pdf into repo
+
 xuJ —- 2017-10-24 14:50
     added in templates directory with discover.html, home.html, login.html, storypage.html
     created main.py and setup the basic code (taken from previous login hw)
     created db.py and setup the basic code (taken from smpl code)
+
 parkP -- 2017-10-24 23:04
     created and added create.html and edit.html to the templates directory
+
 xuJ — 2017-10-25 14:53
     home.html: added forms for the links on top (might change this to links?)
     discover/home.html: added table for info, currently in comments because data structures aren’t set
     main.py: created data structures to store contributed/untouched stories
+
 xuJ - 2017-10-26 14:50
     /story route in main.py: not all data structures are set yet, only the beginning code
     -- all data structures to insert into templates
     —- redirect if story is unedited by user in session
     —- otherwise will proceed to storypage.html template
     discover.html and storypage.html: displaying data structures
+
 parkP -- 2017-10-26 14:50
     created create route
+
 marchiniM -- 2017-10-26 14:50
     wrote auth() function
     wrote root()
     wrote home()
     worked on login.html
+
+xuJ — 2017-10-27 13:11
+    added data structure in /create route for uncontribs and contribs dictionaries
+    uncommented data structure display in discover.html and home.html

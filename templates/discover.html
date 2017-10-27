@@ -8,13 +8,11 @@
 		<input type="submit" value="Home">
 		<br><br><br>
 		<table>
-		<!--
 		{% for story in u %}
 			<tr><td>
-				<h4>{{ story.title }}</h4>
-				<p>{{ story.text.0 }}</p>
+				<h4>{{ u[story][0] }}</h4>
+				<p>{{ u[story][1] }}</p>
 			</td></tr>
-			-->
 		</table>
 	</form>
 </body>
