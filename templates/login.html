@@ -6,8 +6,8 @@
 
 <body>
   <center>
-  {% set message = get_flashed_messages() %}
-  {{message[0]}}
+  <!--{% set messages = get_flashed_messages() %}
+  {{message[0]}}-->
   <h1>Enter username and password</h1>
   <form method="POST" action="/home">
     Username:
@@ -19,14 +19,14 @@
     <input type="submit" value="Login">
   </form>
   <br>
-  <form method="POST" action="/">
+  <form method="POST" action="/register">
       Username:
       <input type="text" name="username">
       <br>
       Password:
       <input type="password" name="password">
       <br>
-<input type="submit" value="Login">
+<input type="submit" value="Register">
 </body>
 </html>
 

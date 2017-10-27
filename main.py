@@ -67,7 +67,7 @@ def auth():
 	return redirect( url_for("root") )
     else:
 	session.add(getUser)
-	return render_template("home.html", c = contrib) )
+	return render_template("home.html", c = contrib) 
  
 #root: if user in session redirects to home route, else displays login.html
 @my_app.route('/')
@@ -76,11 +76,18 @@ def root():
         return redirect( url_for('home') )
     return render_template("login.html")
 
+@my_app.route('/register')
+def register():
+    user = request.form['username']
+    password = request.form['password']
+    c.execute("INSERT INTO users VALUES (%s, %s);"%(user, password))
+    return redirect( url_for("root") )
+
 
 #home: if user in sesson displays home.html, else redirects to root route
 @my_app.route('/home')
 def home():
-    auth()
+    return auth()
 
 
 #discover: goes to discover.html
@@ -88,6 +95,7 @@ def home():
 def discover():
     return render_template("home.html", u = uncontrib)
 
+'''
 #new: goes to new.html
 @my_app.route('/new')
 def new():
@@ -96,7 +104,7 @@ def new():
 #edit: goes to edit.html
 @my_app.route('/edit')
 def edit():
-    
+'''    
 
 #logout: removes session and redirects to root route
 @my_app.route('/logout')
