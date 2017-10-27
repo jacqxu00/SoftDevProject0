@@ -5,7 +5,8 @@ Project 0 Option 0
 10.30.17
 '''
 
-from flask import Flask, render_template, request, session, redirect, url_for, flash, sqlite3
+from flask import Flask, render_template, request, session, redirect, url_for, flash
+import sqlite3
 import os
 
 
@@ -14,9 +15,9 @@ my_app.secret_key = os.urandom(100)
 
 
 f = "storytime.db"
-
-db = sqlite3.connect(f) #open if f exists, otherwise create
+db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
+
 
 username = ""
 contrib = []
@@ -66,48 +67,48 @@ def auth():
 	flash("Sorry, your username and password do not match. Try again.")
 	return redirect( url_for("root") )
     else:
-	session.add(getUser)
+	session["user"] = getUser
 	return render_template("home.html", c = contrib) 
  
 #root: if user in session redirects to home route, else displays login.html
-@my_app.route('/')
+@my_app.route('/', methods=["POST", "GET"])
 def root():
     if "user" in session:
         return redirect( url_for('home') )
     return render_template("login.html")
 
-@my_app.route('/register')
+@my_app.route('/register', methods=["POST", "GET"])
 def register():
     user = request.form['username']
     password = request.form['password']
-    c.execute("INSERT INTO users VALUES (%s, %s);"%(user, password))
+    c.execute("INSERT INTO users VALUES (\"%s\", \"%s\");"%(user, password))
     return redirect( url_for("root") )
 
 
 #home: if user in sesson displays home.html, else redirects to root route
-@my_app.route('/home')
+@my_app.route('/home', methods=["POST", "GET"])
 def home():
     return auth()
 
 
 #discover: goes to discover.html
-@my_app.route('/discover')
+@my_app.route('/discover', methods=["POST", "GET"])
 def discover():
     return render_template("home.html", u = uncontrib)
 
 '''
 #new: goes to new.html
-@my_app.route('/new')
+@my_app.route('/new', methods=["POST", "GET"])
 def new():
     
     
 #edit: goes to edit.html
-@my_app.route('/edit')
+@my_app.route('/edit', methods=["POST", "GET"])
 def edit():
 '''    
 
 #logout: removes session and redirects to root route
-@my_app.route('/logout')
+@my_app.route('/logout', methods=["POST", "GET"])
 def logout():
     if "user" in session:
         session.pop("user")

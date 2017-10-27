@@ -11,8 +11,8 @@ c = db.cursor()    #facilitate db ops
 #INSERT YOUR POPULATE CODE IN THIS ZONE
 
 c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT)")
-c.execute("CREATE TABLE edit (id INT PRIMARY KEY, user TEXT PRIMARY KEY, section INT, content TEXT)")
-c.execute("CREATE TABLE users (id INT PRIMARY KEY, title TEXT, numsections INT)")
+c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT)")
+c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT)")
 
 #==========================================================
 db.commit() #save changes
