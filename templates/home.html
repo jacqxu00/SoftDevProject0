@@ -24,12 +24,16 @@
 		</tr>
 	</table>
 	<br><br><br>
-	<table>
+	<table border="1">
 	{% for story in c %}
 		<tr><td>
 			<h4>{{ c[story][0] }}</h4>
+			<form method="POST" action="/story">
+				<input type="submit" name="story" value={{u[story][1]}}>
+			</form>
 			<p>{{ c[story][1] }}</p>
 		</td></tr>
+	{% endfor %}
 	</table>
 </body>
 </html>

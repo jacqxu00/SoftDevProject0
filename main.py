@@ -99,18 +99,26 @@ def edit():
 #story: goes to storypage.html of requested story
 @my_app.route('/story')
 def story():
-    story_name = "something" #FIX request.form['story']
     ppl_cont = [] #array of people who contributed to this story
     story_sec = [] #array of sections in the story
-    story_id = 0 #FIX story_id to equal the story id of story
-    contributors = c.execute("SELECT user FROM edit WHERE id = story_id;") #pulls all story ids that user has contributed to
+    story_id = request.form["story"]
+    
+    #pulls all story ids that user has contributed to
+    contributors = c.execute("SELECT user FROM edit WHERE id = story_id;")
     for each in contributors:
         #add each contributor to a list of contributors
         ppl_cont.append(each[0])
-    sections = c.execute("SELECT content FROM edit WHERE id = story_id;") #pulls all story ids that user has contributed to
+        
+    #pulls all story ids that user has contributed to
+    sections = c.execute("SELECT content FROM edit WHERE id = story_id;")
     for each in sections:
         #add each section to a list of all sections
         story_sec.append(each[0])
+    
+    #receives story title for story id
+    pre_story_name = c.execute("SELECT title FROM stories WHERE id = story_id;")
+    story_name = pre_story_name[0][0]
+    
     if story_id in contrib:
         return render_template("storypage.html", title = story_name, contribs = ppl_cont, sections = story_sec)
     else:
