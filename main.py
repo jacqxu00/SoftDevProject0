@@ -18,9 +18,11 @@ f = "storytime.db"
 db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
 
+
 c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT)")
 c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT)")
 c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT)")
+
 
 username = ""
 contrib = {} #dict, KEY: story id's the user in session has contributed to, VALUE: [title, numsections]
@@ -29,6 +31,17 @@ uncontrib = {} #dict, KEY: story id's the user in session has not contributed to
 #==========================================================
 
 #creates two arrays, one for all the ids of the stories the user has contributed to, one for all the ids not contributed to
+
+def printdict():
+    print("CONTRIB:\n")
+    for each in contrib:
+        print("%d: %s, %d\n", contrib[each], contrib[each][0], contrib[each][1])
+    print("UNCONTRIB:\n")
+    for each in uncontrib:
+        print("%d: %s, %d\n", uncontrib[each], uncontrib[each][0], uncontrib[each][1])
+    
+    
+    
 def create():
     contributed_stories = c.execute("SELECT id FROM edit WHERE user = username;")
     #pulls all story ids that user has contributed to
