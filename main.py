@@ -18,6 +18,9 @@ f = "storytime.db"
 db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
 
+c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT)")
+c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT)")
+c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT)")
 
 username = ""
 contrib = {} #dict, KEY: story id's the user in session has contributed to, VALUE: [title, numsections]
@@ -83,20 +86,6 @@ def check(inputUser, inputPass):
 
     else:
         return 2
-
-def auth():
-    getUser = request.form['username']
-    getPass = request.form['password']
-    result = check(getUser, getPass)
-    if result == 0:
- 	flash("Sorry, your username does not exist. Try registering instead.")
-	return redirect( url_for("root") )
-    elif result == 1:
-	flash("Sorry, your username and password do not match. Try again.")
-	return redirect( url_for("root") )
-    else:
-	session["user"] = getUser
-	return render_template("home.html", c = contrib) 
  
 #root: if user in session redirects to home route, else displays login.html
 @my_app.route('/', methods=["POST", "GET"])
@@ -113,10 +102,21 @@ def register():
     return redirect( url_for("root") )
 
 
-#home: if user in sesson displays home.html, else redirects to root route
+#home: if username and password authorized displays home.html, else redirects to root route
 @my_app.route('/home', methods=["POST", "GET"])
 def home():
-    return auth()
+    getUser = request.form['username']
+    getPass = request.form['password']
+    result = check(getUser, getPass)
+    if result == 0:
+ 	flash("Sorry, your username does not exist. Try registering instead.")
+	return redirect( url_for("root") )
+    elif result == 1:
+	flash("Sorry, your username and password do not match. Try again.")
+	return redirect( url_for("root") )
+    else:
+	session["user"] = getUser
+	return render_template("home.html", c = contrib)  
 
 
 #discover: goes to discover.html
