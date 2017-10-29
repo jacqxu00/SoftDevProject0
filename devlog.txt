@@ -36,4 +36,5 @@ xuJ — 2017-10-27 13:30
     added in form submit buttons in discover.html and home.html that go into /story route
     fixed /story route data structures that I had trouble with earlier
 
-
+xuJ - 2017-10-29 14:02
+    created printdict() function in main.py for later debugging
