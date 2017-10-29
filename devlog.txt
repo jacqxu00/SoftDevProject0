@@ -25,9 +25,9 @@ parkP -- 2017-10-26 14:50
     created create route
 
 marchiniM -- 2017-10-26 14:50
-    wrote auth() function
-    wrote root()
-    wrote home()
+    wrote check() function
+    wrote root() --> redirects to home if user in session otherwise goes to login
+    wrote home() --> validates username and password and if not valid redirects back to login with a flash message
     worked on login.html
 
 xuJ — 2017-10-27 13:30
@@ -35,6 +35,14 @@ xuJ — 2017-10-27 13:30
     uncommented data structure display in discover.html and home.html
     added in form submit buttons in discover.html and home.html that go into /story route
     fixed /story route data structures that I had trouble with earlier
+    
+marchiniM — 2017-10-27 16:00
+    finished login.html form
+    tested for errors in login functioning
+        fixed database/python interaction
+        
+marchiniM — 2017-10-29 13:00
+    instantaited database tables in main.py file to fix errors interacting with database
 
 xuJ - 2017-10-29 14:02
     created printdict() function in main.py for later debugging
