@@ -69,3 +69,4 @@ marchiniM — 2017-10-30 00:22
 marchiniM — 2017-10-30 1:00
     edited create() so that all stories are being added to uncontrib, not just the first
     	allows for full list to be displayed in /discover
+    ade some edits to database test cases to fix error in discover 
