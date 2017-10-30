@@ -41,27 +41,30 @@ def printdict():
         print("%d: %s, %d\n", uncontrib[each], uncontrib[each][0], uncontrib[each][1])
 
 #populated contrib and uncontrib lists
-def create():
+def create(username):
     contributed_stories = []
-    for id in  c.execute("SELECT id FROM edit WHERE user == \"%s\" ;" %(username)):
+    for id in  c.execute("SELECT id FROM edit WHERE user = \"%s\" ;" %(username)):
         contributed_stories.append(id[0])
     #pulls all story ids that user has contributed to
+    print username
+    print contributed_stories
     
     for story in contributed_stories:
         
         value = [] #creates a value array
         
         #finds the story title based on story id
-        story_title = c.execute("SELECT title FROM stories WHERE id = %d;", story[0])
-        value.append(story_title[0][0])
+        for story_title in c.execute("SELECT title FROM stories WHERE id = %d;" %(story)):
+            value.append(story_title[0])
         
         #finds the number of sections in story using story id then finds the content of the section
-        num_sects = c.execute("SELECT numsections FROM stories WHERE id = %d;", story[0])
-        recent_section = c.execute("SELECT content FROM edit WHERE section = %d;", num_sects[0])
-        value.append(recent_section[0][0])
+        for recent_section in c.execute("SELECT content FROM edit WHERE id = %d AND section = 1;" %(story)):
+            value.append(recent_section[0])
+
+        value.append(story)
         
         #defines story id key as value
-        contrib[story[0]] = value
+        contrib[story] = value
 
     uncontributed_stories = []    
     for id in c.execute("SELECT id FROM stories;"):
@@ -163,10 +166,11 @@ def register():
 #home: if username and password authorized displays home.html, else redirects to root route
 @my_app.route('/home', methods=["POST", "GET"])
 def home():
-    print request.form
+    #print request.form
     if 'username' in request.form:
-        username = request.form['username']
-        create()
+        #username = request.form['username']
+        #print username + " here"
+        #create()
         getUser = request.form['username']
         getPass = request.form['password']
         result = check(getUser, getPass)
@@ -178,6 +182,9 @@ def home():
             return redirect( url_for("root") )
         else:
             session["user"] = getUser
+            username = request.form['username']
+            #print username + " here"
+            create(username)
             return render_template("home.html", c = contrib) 
     elif 'title' in request.form:
         title = request.form['title']
@@ -194,14 +201,14 @@ def home():
         c.execute("UPDATE stories SET numsections = %d WHERE id = %d;"%(getNext(id), id))
         return redirect(url_for("root"))
     else:
-        return render_template("home.html")
+        return render_template("home.html", c = contrib)
 
 
 #discover: goes to discover.html
 @my_app.route('/discover', methods=["POST", "GET"])
 def discover():
-    create()
-    print uncontrib
+    #create()
+    #print uncontrib
     return render_template("discover.html", u = uncontrib)
 
 
@@ -220,27 +227,28 @@ def edit():
     return render_template("edit.html", title = getTitle(id), previous = getPrev(id), key = id)
 
 #story: goes to storypage.html of requested story
-@my_app.route('/story')
+@my_app.route('/story', methods=["POST", "GET"])
 def story():
     ppl_cont = [] #array of people who contributed to this story
     story_sec = [] #array of sections in the story
-    story_id = request.form["story"]
+    story_id = int(request.form["story"])
     
     #pulls all story ids that user has contributed to
-    contributors = c.execute("SELECT user FROM edit WHERE id = story_id;")
+    contributors = c.execute("SELECT user FROM edit WHERE id = %d;" %(story_id))
     for each in contributors:
         #add each contributor to a list of contributors
         ppl_cont.append(each[0])
         
     #pulls all story ids that user has contributed to
-    sections = c.execute("SELECT content FROM edit WHERE id = story_id;")
+    sections = c.execute("SELECT content FROM edit WHERE id = %d;" %(story_id))
     for each in sections:
         #add each section to a list of all sections
         story_sec.append(each[0])
-    
+
     #receives story title for story id
-    pre_story_name = c.execute("SELECT title FROM stories WHERE id = story_id;")
-    story_name = pre_story_name[0][0]
+    story_name = ""
+    for each in c.execute("SELECT title FROM stories WHERE id = %d;" %(story_id)):
+        story_name = each[0]
     
     if story_id in contrib:
         return render_template("storypage.html", title = story_name, contribs = ppl_cont, sections = story_sec)
