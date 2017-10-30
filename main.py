@@ -149,7 +149,6 @@ def home():
         submit = request.form['section']
         c.execute("INSERT INTO edit VALUES (%d, \"%s\", %d, \"%s\");"%(getID(), session['user'], 1, submit))
         c.execute("INSERT INTO stories VALUES (%d, \"%s\", %d);"%(getID(), title, 1))
-        print "HAHAHA"
         return redirect(url_for("root"))
     else:
         return render_template("home.html")
