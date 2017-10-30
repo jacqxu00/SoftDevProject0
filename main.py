@@ -6,7 +6,7 @@ Project 0 Option 0
 '''
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-import sqlite3
+import sqlite3, hashlib
 import os
 
 
@@ -105,7 +105,9 @@ def check(inputUser, inputPass):
     password = ''
     for each in c.execute("SELECT pass FROM users WHERE user = \"%s\";"%inputUser):
         password = each[0]
-    if password != inputPass:
+    passwordhashed = hashlib.md5(password).hexdigest()
+    inputPasshashed = hashlib.md5(inputPass).hexdigest()
+    if passwordhashed != inputPasshashed:
         return 1
 
     else:
@@ -158,7 +160,8 @@ def register():
         if each[0] == user:
             flash("Sorry, that username already exists. Try registering again.")
             return redirect( url_for("root") )
-    c.execute("INSERT INTO users VALUES (\"%s\", \"%s\");"%(user, password))
+    pass_hashed = hashlib.md5(password).hexdigest()
+    c.execute("INSERT INTO users VALUES (\"%s\", \"%s\");"%(user, pass_hashed))
     flash("Account creation successful. You may now log in.")
     return redirect( url_for("root") )
 

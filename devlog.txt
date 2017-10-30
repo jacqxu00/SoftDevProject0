@@ -85,3 +85,4 @@ marchiniM — 2017-10-30 7:15
 xuJ - 2017-10-30 14:05
     updated design.pdf
     removed db and kept code for create table in db.py
+    hashed passwords
