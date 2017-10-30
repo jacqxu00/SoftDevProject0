@@ -76,3 +76,8 @@ parkP -- 2017-10-30 4:33
     created the getTitle, getLast, getPrev, and getNext functions to help with the edit route
     added the edit route and made it redirect to the home page
     fixed bug on edit.html that led users to an error
+    
+marchiniM — 2017-10-30 7:15
+    fixed create() so that the uncontrib and contrib lists are correct
+    fixed /home to display lists of stories contributed to
+    fixed /story to work with storypage.html to show the full story
