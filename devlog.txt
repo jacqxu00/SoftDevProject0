@@ -47,5 +47,17 @@ marchiniM — 2017-10-29 13:00
 xuJ - 2017-10-29 14:02
     created printdict() function in main.py for later debugging
 
+parkP -- 2017-10-20 22:34
+	fixed flash messages bug in login page
+	fixed error that occurs when you try to enter the homepage from /discover and /new
+	created the getID function to help with the /new route
+	finished the /new route
+
 xuJ - 2017-10-29 23:03
     took css from a template online and then implemented into html files
+	
+parkP -- 2017-10-20 22:34
+	fixed flash messages bug in login page
+	fixed error that occurs when you try to enter the homepage from /discover and /new
+	created the getID function to help with the /new route
+	finished the /new route

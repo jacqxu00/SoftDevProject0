@@ -19,9 +19,9 @@ db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise c
 c = db.cursor()    #facilitate db ops
 
 
-c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT)")
-c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT)")
-c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT)")
+#c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT)")
+#c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT)")
+#c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT)")
 
 
 username = ""
@@ -39,8 +39,6 @@ def printdict():
     print("UNCONTRIB:\n")
     for each in uncontrib:
         print("%d: %s, %d\n", uncontrib[each], uncontrib[each][0], uncontrib[each][1])
-    
-    
     
 def create():
     contributed_stories = c.execute("SELECT id FROM edit WHERE user = username;")
@@ -99,7 +97,16 @@ def check(inputUser, inputPass):
 
     else:
         return 2
- 
+
+# function used for getting the ID when creating a story
+def getID():
+    current = 0
+    for each in c.execute("SELECT * FROM stories;"):
+        current += 1
+    current += 1
+    return current
+		
+
 #root: if user in session redirects to home route, else displays login.html
 @my_app.route('/', methods=["POST", "GET"])
 def root():
@@ -107,29 +114,44 @@ def root():
         return redirect( url_for('home') )
     return render_template("login.html")
 
+#if input username doesn't already exist, creates account and adds to database, then redirects back to login, else tells you to try a new username
 @my_app.route('/register', methods=["POST", "GET"])
 def register():
     user = request.form['username']
     password = request.form['password']
+    for each in c.execute("SELECT user FROM users"):
+        if each[0] == user:
+            flash("Sorry, that username already exists. Try registering again.")
+            return redirect( url_for("root") )
     c.execute("INSERT INTO users VALUES (\"%s\", \"%s\");"%(user, password))
+    flash("Account creation successful. You may now log in.")
     return redirect( url_for("root") )
 
 
 #home: if username and password authorized displays home.html, else redirects to root route
 @my_app.route('/home', methods=["POST", "GET"])
 def home():
-    getUser = request.form['username']
-    getPass = request.form['password']
-    result = check(getUser, getPass)
-    if result == 0:
- 	flash("Sorry, your username does not exist. Try registering instead.")
-	return redirect( url_for("root") )
-    elif result == 1:
-	flash("Sorry, your username and password do not match. Try again.")
-	return redirect( url_for("root") )
+    if 'username' in request.form:
+        getUser = request.form['username']
+        getPass = request.form['password']
+        result = check(getUser, getPass)
+        if result == 0:
+            flash("Sorry, your username does not exist. Try registering instead.")
+            return redirect( url_for("root") )
+        elif result == 1:
+            flash("Sorry, your username and password do not match. Try again.")
+            return redirect( url_for("root") )
+        else:
+            session["user"] = getUser
+            return render_template("home.html", c = contrib) 
+    elif 'title' in request.form:
+        title = request.form['title']
+        submit = request.form['section']
+        c.execute("INSERT INTO edit VALUES (%d, \"%s\", %d, \"%s\");"%(getID(), session['user'], 1, submit))
+        c.execute("INSERT INTO stories VALUES (%d, \"%s\", %d);"%(getID(), title, 1))
+        return redirect(url_for("root"))
     else:
-	session["user"] = getUser
-	return render_template("home.html", c = contrib)  
+        return render_template("home.html")
 
 
 #discover: goes to discover.html
@@ -137,12 +159,13 @@ def home():
 def discover():
     return render_template("discover.html", u = uncontrib)
 
-'''
+
 #new: goes to new.html
 @my_app.route('/new', methods=["POST", "GET"])
 def new():
-    
-    
+    return render_template("create.html")
+
+'''
 #edit: goes to edit.html
 @my_app.route('/edit', methods=["POST", "GET"])
 def edit():
