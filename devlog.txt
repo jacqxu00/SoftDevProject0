@@ -81,3 +81,7 @@ marchiniM — 2017-10-30 7:15
     fixed create() so that the uncontrib and contrib lists are correct
     fixed /home to display lists of stories contributed to
     fixed /story to work with storypage.html to show the full story
+
+xuJ - 2017-10-30 14:05
+    updated design.pdf
+    removed db and kept code for create table in db.py
