@@ -39,9 +39,10 @@ def printdict():
     print("UNCONTRIB:\n")
     for each in uncontrib:
         print("%d: %s, %d\n", uncontrib[each], uncontrib[each][0], uncontrib[each][1])
-    
+
+#populated contrib and uncontrib lists
 def create():
-    contributed_stories = c.execute("SELECT id FROM edit WHERE user = username;")
+    contributed_stories = c.execute("SELECT id FROM edit WHERE user == \"%s\" ;" %(username))
     #pulls all story ids that user has contributed to
     
     for story in contributed_stories:
@@ -60,7 +61,7 @@ def create():
         #defines story id key as value
         contrib[story[0]] = value
         
-    uncontributed_stories = c.execute("SELECT id FROM edit WHERE user != username;")
+    uncontributed_stories = c.execute("SELECT id FROM edit WHERE user != \"%s\" ;" %(username))
     #pulls all story ids that user has not contributed to
     
     for story in uncontributed_stories:
@@ -68,12 +69,14 @@ def create():
         value = [] #creates a value array
         
         #finds the story title based on story id
-        story_title = c.execute("SELECT title FROM stories WHERE id = %d;", story[0])
-        value.append(story_title[0][0])
+        for story_title in c.execute("SELECT title FROM stories WHERE id = %d;" %(story[0])):
+            value.append(story_title[0])
         
         #finds the number of sections in story using story id then finds the content of the section
-        recent_section = c.execute("SELECT content FROM edit WHERE section = 1")
-        value.append(recent_section[0][0])
+        for recent_section in c.execute("SELECT content FROM edit WHERE section = 1"):
+            value.append(recent_section[0])
+
+        value.append(story[0])
         
         #defines story id key as value
         uncontrib[story[0]] = value
@@ -153,12 +156,15 @@ def home():
         c.execute("INSERT INTO stories VALUES (%d, \"%s\", %d);"%(getID(), title, 1))
         return redirect(url_for("root"))
     else:
+        username = request.form['username']
+        create()
         return render_template("home.html")
 
 
 #discover: goes to discover.html
 @my_app.route('/discover', methods=["POST", "GET"])
 def discover():
+    create()
     return render_template("discover.html", u = uncontrib)
 
 

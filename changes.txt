@@ -1,1 +1,5 @@
-1. added /story route
+Changes Made Since Beginning:
+
+1. added /story route for the individual story pages
+2. added an introduction paragraph on the login/welcome page
+3. implemented css (template was found online)
