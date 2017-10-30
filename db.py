@@ -19,7 +19,7 @@ c.execute("INSERT INTO stories VALUES (0, 'bananas', 1);")
 c.execute("INSERT INTO edit VALUES (0, 'jackie', 1,'A girl liked bananas.');")
 
 c.execute("INSERT INTO stories VALUES (1, 'cookies', 1);")
-c.execute("INSERT INTO edit VALUES (0, 'potato', 1,'He stole a cookie.');")
+c.execute("INSERT INTO edit VALUES (1, 'potato', 1,'He stole a cookie.');")
 
 #==========================================================
 db.commit() #save changes

@@ -60,8 +60,10 @@ def create():
         
         #defines story id key as value
         contrib[story[0]] = value
-        
-    uncontributed_stories = c.execute("SELECT id FROM edit WHERE user != \"%s\" ;" %(username))
+
+    uncontributed_stories = []    
+    for id in c.execute("SELECT id FROM edit WHERE user != \"%s\" ;" %(username)):
+        uncontributed_stories.append(id[0])
     #pulls all story ids that user has not contributed to
     
     for story in uncontributed_stories:
@@ -69,17 +71,17 @@ def create():
         value = [] #creates a value array
         
         #finds the story title based on story id
-        for story_title in c.execute("SELECT title FROM stories WHERE id = %d;" %(story[0])):
+        for story_title in c.execute("SELECT title FROM stories WHERE id = %d;" %(story)):
             value.append(story_title[0])
         
         #finds the number of sections in story using story id then finds the content of the section
-        for recent_section in c.execute("SELECT content FROM edit WHERE section = 1"):
+        for recent_section in c.execute("SELECT content FROM edit WHERE id = %d AND section = 1;" %(story)):
             value.append(recent_section[0])
 
-        value.append(story[0])
+        value.append(story)
         
         #defines story id key as value
-        uncontrib[story[0]] = value
+        uncontrib[story] = value
 
 #checks to see if username is valid, and password is correct
 #returns: 0 if username is invalid, 1 if username valid password is incorrect, 2 if successful login
@@ -163,6 +165,7 @@ def home():
 @my_app.route('/discover', methods=["POST", "GET"])
 def discover():
     create()
+    print uncontrib
     return render_template("discover.html", u = uncontrib)
 
 
