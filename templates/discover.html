@@ -16,8 +16,7 @@
 				<h4>{{ u[story][0] }}</h4>
 				<p>{{ u[story][1] }}</p>
 				<form method="POST" action="/edit">
-				  <input type="submit" value="Go"  name= {{int(u[story][2])}}  >
-				  <p>{{u[story][2]}}</p>
+				  <button name="id" type="submit" value={{(u[story][2])}}>GO</button>
 				</form>
 			</td></tr>
 		{% endfor %}

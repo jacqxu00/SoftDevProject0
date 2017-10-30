@@ -10,7 +10,7 @@
     		<form method="POST" action="/home">
     		  <input type="submit" class="button special" value="HOME">
     		</form>
-			<form method="POST" action="/explore">
+			<form method="POST" action="/discover">
     		  <input type="submit" class="button special" value="EXPLORE">
     		</form>
 		</table>
@@ -28,18 +28,18 @@
 						<h2>{{title}}</h2>
 						<p>
 							<b>Previous Section: </b><br>
-							{previous}}
+							{{previous}}
 						</p>
 					</header>
 					<hr />
 					<b>Your Section:</b>
 			  	  	<br>
-					<form>
+					<form method="POST" action="/home">
 			           <textarea rows="5" cols="80" name="next">
 			       	   </textarea>
 			     	   <br>
 			     	   <br>
-			     	   <input type="submit" class="button special" value="SUBMIT">
+					   <button name="id" type="submit" value={{key}}>GO</button>
 					</form>
 				</div>
 			</div>

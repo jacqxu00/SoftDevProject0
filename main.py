@@ -115,9 +115,29 @@ def getID():
         current += 1
     current += 1
     return current
-		
-#def getLast():
-    
+
+
+# function that gets title of a story with its ID
+def getTitle(id):
+    c.execute("SELECT title FROM stories WHERE id = " + str(id))
+    ans = c.fetchone()[0]
+    return ans
+ 
+#function that gets number of sections
+def getLast(id):
+    c.execute("SELECT numsections FROM stories WHERE id = " + str(id))
+    ans = c.fetchone()[0]
+    return ans
+ 
+#function that gets most recent edit
+def getPrev(id):
+    c.execute("SELECT content FROM edit WHERE id = " + str(id) + " AND section = " + str(getLast(id)))
+    ans = c.fetchone()[0]
+    return ans
+	
+def getNext(id):
+    ans = getLast(id) + 1
+    return ans
 
 #root: if user in session redirects to home route, else displays login.html
 @my_app.route('/', methods=["POST", "GET"])
@@ -143,6 +163,7 @@ def register():
 #home: if username and password authorized displays home.html, else redirects to root route
 @my_app.route('/home', methods=["POST", "GET"])
 def home():
+    print request.form
     if 'username' in request.form:
         username = request.form['username']
         create()
@@ -164,6 +185,14 @@ def home():
         c.execute("INSERT INTO edit VALUES (%d, \"%s\", %d, \"%s\");"%(getID(), session['user'], 1, submit))
         c.execute("INSERT INTO stories VALUES (%d, \"%s\", %d);"%(getID(), title, 1))
         return redirect(url_for("root"))
+    elif 'next' in request.form:
+        submit = request.form['next']
+        id = int(request.form['id'])
+        print getNext(id)
+        print id
+        c.execute("INSERT INTO edit VALUES (%d, \"%s\", %d, \"%s\");"%(id, session['user'], getNext(id), submit))
+        c.execute("UPDATE stories SET numsections = %d WHERE id = %d;"%(getNext(id), id))
+        return redirect(url_for("root"))
     else:
         return render_template("home.html")
 
@@ -181,14 +210,15 @@ def discover():
 def new():
     return render_template("create.html")
 
-'''
+
 #edit: goes to edit.html
 @my_app.route('/edit', methods=["POST", "GET"])
 def edit():
-    id = request.form['story']
+    id = request.form['id']
+    id = int(id)
     c.execute("SELECT title FROM stories WHERE id = %d;"%(id))
-    return render_template("edit.html", title = title, previous = previous)
-'''
+    return render_template("edit.html", title = getTitle(id), previous = getPrev(id), key = id)
+
 #story: goes to storypage.html of requested story
 @my_app.route('/story')
 def story():
