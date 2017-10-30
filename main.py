@@ -111,6 +111,8 @@ def getID():
     current += 1
     return current
 		
+#def getLast():
+    
 
 #root: if user in session redirects to home route, else displays login.html
 @my_app.route('/', methods=["POST", "GET"])
@@ -137,6 +139,8 @@ def register():
 @my_app.route('/home', methods=["POST", "GET"])
 def home():
     if 'username' in request.form:
+        username = request.form['username']
+        create()
         getUser = request.form['username']
         getPass = request.form['password']
         result = check(getUser, getPass)
@@ -156,8 +160,6 @@ def home():
         c.execute("INSERT INTO stories VALUES (%d, \"%s\", %d);"%(getID(), title, 1))
         return redirect(url_for("root"))
     else:
-        username = request.form['username']
-        create()
         return render_template("home.html")
 
 
@@ -178,8 +180,10 @@ def new():
 #edit: goes to edit.html
 @my_app.route('/edit', methods=["POST", "GET"])
 def edit():
-'''    
-
+    id = request.form['story']
+    c.execute("SELECT title FROM stories WHERE id = %d;"%(id))
+    return render_template("edit.html", title = title, previous = previous)
+'''
 #story: goes to storypage.html of requested story
 @my_app.route('/story')
 def story():
