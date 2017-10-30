@@ -137,6 +137,8 @@ def register():
 @my_app.route('/home', methods=["POST", "GET"])
 def home():
     if 'username' in request.form:
+        username = request.form['username']
+        create()
         getUser = request.form['username']
         getPass = request.form['password']
         result = check(getUser, getPass)
@@ -156,8 +158,6 @@ def home():
         c.execute("INSERT INTO stories VALUES (%d, \"%s\", %d);"%(getID(), title, 1))
         return redirect(url_for("root"))
     else:
-        username = request.form['username']
-        create()
         return render_template("home.html")
 
 
