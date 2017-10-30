@@ -42,7 +42,9 @@ def printdict():
 
 #populated contrib and uncontrib lists
 def create():
-    contributed_stories = c.execute("SELECT id FROM edit WHERE user == \"%s\" ;" %(username))
+    contributed_stories = []
+    for id in  c.execute("SELECT id FROM edit WHERE user == \"%s\" ;" %(username)):
+        contributed_stories.append(id[0])
     #pulls all story ids that user has contributed to
     
     for story in contributed_stories:
@@ -62,8 +64,11 @@ def create():
         contrib[story[0]] = value
 
     uncontributed_stories = []    
-    for id in c.execute("SELECT id FROM edit WHERE user != \"%s\" ;" %(username)):
+    for id in c.execute("SELECT id FROM stories;"):
         uncontributed_stories.append(id[0])
+    for id in contributed_stories:
+        uncontributed_stories.remove(id)
+    
     #pulls all story ids that user has not contributed to
     
     for story in uncontributed_stories:
