@@ -6,7 +6,11 @@
 
 <body>
   <center>
-
+    {% set messages = get_flashed_messages() %}
+    {% for i in messages %}
+    {{i}}
+    {% endfor %}
+  
   <h1>Enter username and password</h1>
   <form method="POST" action="/home">
     Username:
