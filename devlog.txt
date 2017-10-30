@@ -55,9 +55,8 @@ parkP -- 2017-10-20 22:34
 
 xuJ - 2017-10-29 23:03
     took css from a template online and then implemented into html files
-	
-parkP -- 2017-10-20 22:34
-	fixed flash messages bug in login page
-	fixed error that occurs when you try to enter the homepage from /discover and /new
-	created the getID function to help with the /new route
-	finished the /new route
+
+xuJ - 2017-10-29 23:32
+    fixed css because it’s different when implemented from python
+    could not figure out images so probably will not use at all
+    added a welcome paragraph onto the login page

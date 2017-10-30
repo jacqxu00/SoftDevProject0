@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<link rel="stylesheet" href="css/main.css">
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
     <title> CREATE </title>
   </head>
   <body>
@@ -15,9 +15,11 @@
 	<section id="one" class="wrapper style2">
 		<div class="inner">
 			<div class="box">
+				<!--
 				<div class="image fit">
-					<img src="images/pic01.jpg" alt="" />
+					<img "{{url_for('static', filename='styles/images/pic01.jpg')}}" alt="" />
 				</div>
+					-->
 				<div class="content">
 					<form method="POST" action="/home">
 						<header class="align-center">
