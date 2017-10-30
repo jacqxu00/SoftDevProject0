@@ -60,3 +60,8 @@ xuJ - 2017-10-29 23:32
     fixed css because it’s different when implemented from python
     could not figure out images so probably will not use at all
     added a welcome paragraph onto the login page
+
+marchiniM — 2017-10-30 00:22
+    edited create() to fix some database errors (mostly string formatting)
+    added create() and instantiation of username variable to home root after auhthorization
+    wrote /discover route and fixed discover.html template issue displaying the wrong name
