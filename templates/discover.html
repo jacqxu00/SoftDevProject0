@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="css/main.css">
 	<title>Discover</title>
 </head>
 <body>
 	<form action="/home" method="POST">
-		<input type="submit" value="Home">
-		<br><br><br>
+		<input type="submit" class="button special" value="Home">
+	</form>
+	<br><br><br>
+	<div class="table-wrapper">
 		<table border="1">
 		{% for story in u %}
 			<tr><td>
@@ -18,6 +21,6 @@
 			</td></tr>
 		{% endfor %}
 		</table>
-	</form>
+	</div>
 </body>
 </html>

@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
+	<link rel="stylesheet" href="css/main.css">
     <title> CREATE </title>
   </head>
   <body>
 
     <form method="POST" action="/home">
-      <input type="submit" value="HOME">
+      <input type="submit" class="button special" value="HOME">
       <br>
       <br>
       <br>
     </form>
-    
-    <form method="POST" action="/home">
-      Title:
-      <br>
-      <input type="text" name="title">
-      <br>
-      <br>
-      First Section:
-      <br>
-      <textarea rows="5" cols="80" name="section">
-      </textarea>
-      <br>
-      <br>
-      <input type="submit" value="SUBMIT">
-    </form>
-    
+	<section id="one" class="wrapper style2">
+		<div class="inner">
+			<div class="box">
+				<div class="image fit">
+					<img src="images/pic01.jpg" alt="" />
+				</div>
+				<div class="content">
+					<form method="POST" action="/home">
+						<header class="align-center">
+							<h2>New Story</h2>
+							<p>
+								<b>Title: </b>
+								<br>
+								<input type="text" name="title">
+							</p>
+						</header>
+						<hr />
+						<b>First Section: </b>
+				        <br>
+				        <textarea rows="5" cols="80" name="section">
+				        </textarea>
+				        <br>
+				        <br>
+				        <input type="submit" value="SUBMIT">
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
   </body>
 </html>

@@ -46,3 +46,6 @@ marchiniM — 2017-10-29 13:00
 
 xuJ - 2017-10-29 14:02
     created printdict() function in main.py for later debugging
+
+xuJ - 2017-10-29 23:03
+    took css from a template online and then implemented into html files

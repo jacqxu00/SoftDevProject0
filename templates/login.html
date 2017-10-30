@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="css/main.css">
   <title>Login</title>
 </head>
 
@@ -9,23 +10,32 @@
 
   <h1>Enter username and password</h1>
   <form method="POST" action="/home">
-    Username:
-    <input type="text" name="username">
-    <br>
-    Password:
-    <input type="password" name="password">
-    <br>
-    <input type="submit" value="Login">
+	<div class="12u$">
+		<div class="select-wrapper">
+		    Username:
+		    <input type="text" name="username">
+		    <br>
+		    Password:
+		    <input type="password" name="password">
+		    <br>
+		    <input type="submit" value="Login">
+		</div>
+	</div>
   </form>
   <br>
   <form method="POST" action="/register">
-      Username:
-      <input type="text" name="username">
-      <br>
-      Password:
-      <input type="password" name="password">
-      <br>
-<input type="submit" value="Register">
+  	<div class="12u$">
+  		<div class="select-wrapper">
+			Username:
+			<input type="text" name="username">
+			<br>
+			Password:
+			<input type="password" name="password">
+			<br>
+			<input type="submit" value="Register">
+  		</div>
+  	</div>
+  </form>
 </body>
 </html>
 
