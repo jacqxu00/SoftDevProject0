@@ -107,11 +107,17 @@ def root():
         return redirect( url_for('home') )
     return render_template("login.html")
 
+#if input username doesn't already exist, creates account and adds to database, then redirects back to login, else tells you to try a new username
 @my_app.route('/register', methods=["POST", "GET"])
 def register():
     user = request.form['username']
     password = request.form['password']
+    for each in c.execute("SELECT user FROM users"):
+        if each[0] == user:
+            flash("Sorry, that username already exists. Try registering again.")
+            return redirect( url_for("root") )
     c.execute("INSERT INTO users VALUES (\"%s\", \"%s\");"%(user, password))
+    flash("Account creation successful. You may now log in.")
     return redirect( url_for("root") )
 
 
