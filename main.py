@@ -105,9 +105,8 @@ def check(inputUser, inputPass):
     password = ''
     for each in c.execute("SELECT pass FROM users WHERE user = \"%s\";"%inputUser):
         password = each[0]
-    passwordhashed = hashlib.md5(password).hexdigest()
     inputPasshashed = hashlib.md5(inputPass).hexdigest()
-    if passwordhashed != inputPasshashed:
+    if password != inputPasshashed:
         return 1
 
     else:
