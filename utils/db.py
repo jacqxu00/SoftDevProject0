@@ -19,6 +19,13 @@ pw3 = hashlib.md5('mashed').hexdigest()
 c.execute("INSERT INTO users VALUES('bananas',\"%s\");"%(pw1))
 c.execute("INSERT INTO users VALUES('jackie',\"%s\");"%(pw2))
 c.execute("INSERT INTO users VALUES('potato',\"%s\");"%(pw3))
+
+c.execute("INSERT INTO stories VALUES(0, 'Pizza Man', 1);")
+c.execute("INSERT INTO edit VALUES(0, 'bananas', 1, 'There once was a pizza man who delivered pizzas');")
+c.execute("INSERT INTO stories VALUES(1, 'The Dirty Wall', 1);")
+c.execute("INSERT INTO edit VALUES(1, 'jackie', 1, 'The wall was dirty.');")
+c.execute("INSERT INTO stories VALUES(2, 'Huge Scandal', 1);")
+c.execute("INSERT INTO edit VALUES(2, 'potato', 1, 'Huge scaldal is huge sandal but with a c.');")
 #==========================================================
 db.commit() #save changes
 db.close()  #close database
