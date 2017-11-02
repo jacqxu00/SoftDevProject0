@@ -8,7 +8,7 @@ Project 0 Option 0
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import sqlite3, hashlib
 import os
-from utils import db
+#from utils import db
 
 
 my_app = Flask (__name__)

@@ -25,7 +25,7 @@ c.execute("INSERT INTO edit VALUES(0, 'bananas', 1, 'There once was a pizza man 
 c.execute("INSERT INTO stories VALUES(1, 'The Dirty Wall', 1);")
 c.execute("INSERT INTO edit VALUES(1, 'jackie', 1, 'The wall was dirty.');")
 c.execute("INSERT INTO stories VALUES(2, 'Huge Scandal', 1);")
-c.execute("INSERT INTO edit VALUES(2, 'potato', 1, 'Huge scaldal is huge sandal but with a c.');")
+c.execute("INSERT INTO edit VALUES(2, 'potato', 1, 'Huge scaldal is huge scandal but with an l.');")
 #==========================================================
 db.commit() #save changes
 db.close()  #close database
