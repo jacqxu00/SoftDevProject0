@@ -177,6 +177,9 @@ def home():
         getUser = request.form['username']
         getPass = request.form['password']
         result = check(getUser, getPass)
+        session["user"] = getUser
+        username = request.form['username']
+        create(username)
         if result == 0:
             flash("Sorry, your username does not exist. Try registering instead.")
             return redirect( url_for("root") )
@@ -184,10 +187,7 @@ def home():
             flash("Sorry, your username and password do not match. Try again.")
             return redirect( url_for("root") )
         else:
-            session["user"] = getUser
-            username = request.form['username']
             #print username + " here"
-            create(username)
             return render_template("home.html", c = contrib) 
     elif 'title' in request.form:
         title = request.form['title']
@@ -210,7 +210,7 @@ def home():
 #discover: goes to discover.html
 @my_app.route('/discover', methods=["POST", "GET"])
 def discover():
-    #create()
+    create(username)
     #print uncontrib
     return render_template("discover.html", u = uncontrib)
 
