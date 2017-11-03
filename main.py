@@ -71,7 +71,8 @@ def create(username):
     for id in c.execute("SELECT id FROM stories;"):
         uncontributed_stories.append(id[0])
     for id in contributed_stories:
-        uncontributed_stories.remove(id)
+        if uncontributed_stories.index(id) != -1:
+            uncontributed_stories.remove(id)
     
     #pulls all story ids that user has not contributed to
     
@@ -177,7 +178,7 @@ def home():
         getUser = request.form['username']
         getPass = request.form['password']
         result = check(getUser, getPass)
-        session["user"] = getUser
+        print "Result is" + str(check(getUser, getPass))
         username = request.form['username']
         create(username)
         if result == 0:
@@ -188,6 +189,7 @@ def home():
             return redirect( url_for("root") )
         else:
             #print username + " here"
+            session["user"] = getUser
             return render_template("home.html", c = contrib) 
     elif 'title' in request.form:
         title = request.form['title']
@@ -204,13 +206,14 @@ def home():
         c.execute("UPDATE stories SET numsections = %d WHERE id = %d;"%(getNext(id), id))
         return redirect(url_for("root"))
     else:
+        create(session['user'])
         return render_template("home.html", c = contrib)
 
 
 #discover: goes to discover.html
 @my_app.route('/discover', methods=["POST", "GET"])
 def discover():
-    create(username)
+    create(session["user"])
     #print uncontrib
     return render_template("discover.html", u = uncontrib)
 
