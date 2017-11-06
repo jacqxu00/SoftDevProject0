@@ -69,10 +69,11 @@ def create(username):
 
     uncontributed_stories = []    
     for id in c.execute("SELECT id FROM stories;"):
-        uncontributed_stories.append(id[0])
-    for id in contributed_stories:
-        if uncontributed_stories.index(id) != -1:
-            uncontributed_stories.remove(id)
+        if not (id[0] in contributed_stories):
+            uncontributed_stories.append(id[0])
+   # for id in contributed_stories:
+     #   if uncontributed_stories.index(id) != -1:
+      #      uncontributed_stories.remove(id)
     
     #pulls all story ids that user has not contributed to
     
@@ -213,8 +214,8 @@ def home():
 #discover: goes to discover.html
 @my_app.route('/discover', methods=["POST", "GET"])
 def discover():
-    create(session["user"])
-    #print uncontrib
+    print uncontrib
+    print contrib
     return render_template("discover.html", u = uncontrib)
 
 
@@ -230,6 +231,8 @@ def edit():
     id = request.form['id']
     id = int(id)
     c.execute("SELECT title FROM stories WHERE id = %d;"%(id))
+    uncontrib.pop(id)
+    print "IN EDIT: " + str(uncontrib)
     return render_template("edit.html", title = getTitle(id), previous = getPrev(id), key = id)
 
 #story: goes to storypage.html of requested story
