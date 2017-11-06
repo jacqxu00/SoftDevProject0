@@ -20,11 +20,6 @@ db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise c
 c = db.cursor()    #facilitate db ops
 
 
-#c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT)")
-#c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT)")
-#c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT)")
-
-
 username = ""
 contrib = {} #dict, KEY: story id's the user in session has contributed to, VALUE: [title, numsections]
 uncontrib = {} #dict, KEY: story id's the user in session has not contributed to, VALUE: [title, numsections]
@@ -32,6 +27,27 @@ uncontrib = {} #dict, KEY: story id's the user in session has not contributed to
 #==========================================================
 
 #creates two arrays, one for all the ids of the stories the user has contributed to, one for all the ids not contributed to
+
+#adding test data
+'''
+c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT);")
+c.execute("CREATE TABLE edit (id INT, user TEXT, section INT, content TEXT);")
+c.execute("CREATE TABLE stories (id INT PRIMARY KEY, title TEXT, numsections INT);")
+
+pw1 = hashlib.md5('crazy').hexdigest()
+pw2 = hashlib.md5('pass').hexdigest()
+pw3 = hashlib.md5('mashed').hexdigest()
+c.execute("INSERT INTO users VALUES('bananas',\"%s\");"%(pw1))
+c.execute("INSERT INTO users VALUES('jackie',\"%s\");"%(pw2))
+c.execute("INSERT INTO users VALUES('potato',\"%s\");"%(pw3))
+
+c.execute("INSERT INTO stories VALUES(0, 'Pizza Man', 1);")
+c.execute("INSERT INTO edit VALUES(0, 'bananas', 1, 'There once was a pizza man who delivered pizzas');")
+c.execute("INSERT INTO stories VALUES(1, 'The Dirty Wall', 1);")
+c.execute("INSERT INTO edit VALUES(1, 'jackie', 1, 'The wall was dirty.');")
+c.execute("INSERT INTO stories VALUES(2, 'Huge Scandal', 1);")
+c.execute("INSERT INTO edit VALUES(2, 'potato', 1, 'Huge scaldal is huge scandal but with an l.');")
+'''
 
 def printdict():
     print("CONTRIB:\n")
